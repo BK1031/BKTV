@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
         setState(() {
           registerWidget = new Container(
             child: new HeartbeatProgressIndicator(
-              child: new Image.asset("images/bktv-logo.png", height: 20,),
+              child: new Image.asset("images/favicon.png", height: 20,),
             ),
           );
         });

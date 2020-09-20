@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:html' as html;
 import 'package:bk1031_tv/models/user.dart';
 import 'package:bk1031_tv/models/video.dart';
+import 'package:bk1031_tv/navbars/home_footer.dart';
 import 'package:bk1031_tv/navbars/home_navbar.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
@@ -154,7 +155,8 @@ class _HomePageState extends State<HomePage> {
                         direction: Axis.horizontal,
                         children: newWidgetList,
                       )
-                    )
+                    ),
+                    new HomeFooter()
                   ],
                 ),
               ),
