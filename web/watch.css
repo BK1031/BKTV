@@ -154,11 +154,14 @@
     margin: 0;
 }
 
-.vjs-theme-bktv .vjs-play-progress,
+.vjs-theme-bktv .vjs-play-progress {
+    border-radius: 1em;
+    background-color: #2eb2ff;
+}
+
 .vjs-theme-bktv .vjs-load-progress,
 .vjs-theme-bktv .vjs-load-progress div {
     border-radius: 1em;
-    background-color: #2eb2ff;
 }
 
 /* END THEME */

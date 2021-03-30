@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
         setState(() {
           registerWidget = new Container(
             child: new HeartbeatProgressIndicator(
-              child: new Image.asset("images/favicon.png", height: 20,),
+              child: new Image.asset("images/bktv-logo.png", height: 20,),
             ),
           );
         });
@@ -202,7 +202,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 new Padding(padding: EdgeInsets.all(16.0)),
-                registerWidget
+                registerWidget,
+                new Padding(padding: EdgeInsets.all(8.0)),
+                new FlatButton(
+                  child: new Text("Already have an account?", style: TextStyle(fontSize: 17),),
+                  textColor: mainColor,
+                  onPressed: () {
+                    router.navigateTo(context, "/login", transition: TransitionType.fadeIn);
+                  },
+                )
               ],
             ),
           ),

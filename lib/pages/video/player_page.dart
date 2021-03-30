@@ -2,17 +2,12 @@ import 'dart:html';
 import 'dart:html' as html;
 import 'package:bk1031_tv/models/user.dart';
 import 'package:bk1031_tv/models/video.dart';
-import 'package:bk1031_tv/navbars/home_navbar.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
 import 'package:easy_web_view/easy_web_view.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:progress_indicators/progress_indicators.dart';
-import 'package:video_player/video_player.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class PlayerPage extends StatefulWidget {
   @override

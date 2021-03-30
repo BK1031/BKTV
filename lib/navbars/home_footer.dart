@@ -12,6 +12,7 @@ class _HomeFooterState extends State<HomeFooter> {
     return Container(
       color: currCardColor,
       height: 100,
+      padding: EdgeInsets.all(16),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -19,19 +20,12 @@ class _HomeFooterState extends State<HomeFooter> {
             children: [
               new FlatButton(
                 child: new Text(""),
+                onPressed: () {
+
+                },
               )
             ],
           ),
-          new Column(
-            children: [
-              new Text("hi")
-            ],
-          ),
-          new Column(
-            children: [
-              new Text("hi")
-            ],
-          )
         ],
       ),
     );

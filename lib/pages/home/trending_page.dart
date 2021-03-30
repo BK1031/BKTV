@@ -11,12 +11,12 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 
-class ShowsPage extends StatefulWidget {
+class TrendingPage extends StatefulWidget {
   @override
-  _ShowsPageState createState() => _ShowsPageState();
+  _TrendingPageState createState() => _TrendingPageState();
 }
 
-class _ShowsPageState extends State<ShowsPage> {
+class _TrendingPageState extends State<TrendingPage> {
   final Storage _localStorage = html.window.localStorage;
   User currUser = User.plain();
 
@@ -25,14 +25,14 @@ class _ShowsPageState extends State<ShowsPage> {
   @override
   void initState() {
     super.initState();
-    getShows();
+    getTrending();
   }
 
-  void getShows() {
-    fb.database().ref("videos").onChildAdded.listen((event) {
-      setState(() {
-        Video video = new Video.fromSnapshot(event.snapshot);
-        if (video.type == "TV-Show") {
+  void getTrending() {
+    fb.database().ref("trending").onChildAdded.listen((event) {
+      fb.database().ref("videos").child(event.snapshot.val()).once("value").then((value) {
+        setState(() {
+          Video video = new Video.fromSnapshot(value.snapshot);
           widgetList.add(new Card(
             color: currCardColor,
             elevation: 16,
@@ -57,7 +57,7 @@ class _ShowsPageState extends State<ShowsPage> {
               ),
             ),
           ));
-        }
+        });
       });
     });
   }
@@ -126,7 +126,7 @@ class _ShowsPageState extends State<ShowsPage> {
                       padding: EdgeInsets.all(16),
                       width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
                       child: new Text(
-                        "TV-Shows",
+                        "Trending",
                         style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                       ),
                     ),

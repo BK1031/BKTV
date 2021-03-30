@@ -41,15 +41,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    if (email == "" || password == "") {
-
-    }
+    fb.auth().setPersistence("local");
+    if (email == "" || password == "") {}
     else {
       try {
         setState(() {
           loginWidget = new Container(
             child: new HeartbeatProgressIndicator(
-              child: new Image.asset("images/favicon.png", height: 20,),
+              child: new Image.asset("images/bktv-logo.png", height: 20,),
             ),
           );
         });

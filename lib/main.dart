@@ -3,6 +3,7 @@ import 'package:bk1031_tv/pages/auth/register_page.dart';
 import 'package:bk1031_tv/pages/home/home_page.dart';
 import 'package:bk1031_tv/pages/home/movies_page.dart';
 import 'package:bk1031_tv/pages/home/shows_page.dart';
+import 'package:bk1031_tv/pages/home/trending_page.dart';
 import 'package:bk1031_tv/pages/video/movie_details_page.dart';
 import 'package:bk1031_tv/pages/video/player_page.dart';
 import 'package:bk1031_tv/pages/video/show_details_page.dart';
@@ -33,6 +34,9 @@ void main() {
   // HOME ROUTES
   router.define('/', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new HomePage();
+  }));
+  router.define('/trending', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new TrendingPage();
   }));
   router.define('/movies', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new MoviesPage();

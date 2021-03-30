@@ -1,5 +1,4 @@
 import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 
 import '../models/version.dart';
@@ -8,7 +7,7 @@ Version appVersion = new Version("1.4.0+1");
 String appStatus = "";
 String appFull = "Version ${appVersion.toString()}";
 
-final router = new Router();
+final router = new FluroRouter();
 
 final String DEFAULT_PROFILE = "https://firebasestorage.googleapis.com/v0/b/bk1031-tv.appspot.com/o/default-profile.png?alt=media&token=4852e319-0b91-4512-a886-17b50033b7e1";
 
