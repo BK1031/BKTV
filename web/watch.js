@@ -11,7 +11,7 @@ video.ready(function() {
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-console.log("BKTV Player v1.2.2");
+console.log("BKTV Player v1.3.1");
 
 video.src('https://tv.bk1031.dev/' + urlParams.get('id') + '.mp4');
 
@@ -85,7 +85,10 @@ firebase.auth().onAuthStateChanged(function(user) {
             }
         });
         video.on('timeupdate', function () {
-            firebase.database().ref('/users/' + user.uid + '/history/' + urlParams.get('id') + '/progress').set(Math.round(video.currentTime()) + '/' + Math.round(video.duration()));
+            firebase.database().ref('/users/' + user.uid + '/history/' + urlParams.get('id')).update({
+                "progress": Math.round(video.currentTime()) + '/' + Math.round(video.duration()),
+                "date": new Date().toDateString()
+            });
             // update continue watching page
             if (!done) {
                 firebase.database().ref('/users/' + user.uid + '/continue/' + urlParams.get('id')).set({

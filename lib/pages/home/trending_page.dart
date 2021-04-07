@@ -74,54 +74,7 @@ class _TrendingPageState extends State<TrendingPage> {
               child: new SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    new Container(
-                      padding: EdgeInsets.all(16),
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: Center(
-                        child: new Card(
-                          color: currCardColor,
-                          elevation: 16,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                          child: Container(
-                            width: 600,
-                            padding: EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "BKTV",
-                                  style: TextStyle(fontSize: 60, fontFamily: "Sifonn", color: mainColor),
-                                ),
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "Open Source, No Ads, Always Free ",
-                                  style: TextStyle(fontSize: 20, color: currTextColor),
-                                ),
-                                new Padding(padding: EdgeInsets.all(8)),
-                                new Theme(
-                                  data: new ThemeData(
-                                    fontFamily: "DIN Condensed",
-                                    primaryColor: mainColor,
-                                    hintColor: currDividerColor,
-                                  ),
-                                  child: new TextField(
-                                    decoration: InputDecoration(
-                                        labelText: "Search",
-                                        hintText: "Search for a movie or show",
-                                        border: OutlineInputBorder()
-                                    ),
-                                    style: TextStyle(color: currTextColor, fontSize: 20),
-                                    autocorrect: false,
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    new Padding(padding: EdgeInsets.all(16),),
                     new Container(
                       padding: EdgeInsets.all(16),
                       width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
@@ -129,6 +82,10 @@ class _TrendingPageState extends State<TrendingPage> {
                         "Trending",
                         style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                       ),
+                    ),
+                    new Container(
+                        padding: EdgeInsets.all(16),
+                        child: new Text("Coming soon...", style: TextStyle(color: currTextColor, fontSize: 20),)
                     ),
                     new Container(
                         padding: EdgeInsets.all(16),
@@ -140,6 +97,7 @@ class _TrendingPageState extends State<TrendingPage> {
                           children: widgetList,
                         )
                     ),
+                    new Container(height: MediaQuery.of(context).size.height / 2,),
                     new Container(height: 200,),
                     new HomeFooter()
                   ],

@@ -33,7 +33,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
 
   List<int> seasons = [];
   int selectedSeason = 1;
-  List<Widget> episodeWidgetList = new List();
+  List<Widget> episodeWidgetList = [];
 
   @override
   void initState() {
@@ -87,6 +87,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
   Future<void> getEpisodes() async {
     print("Getting episodes");
     episodeWidgetList.clear();
+    // Sort because funny Firebase Database ordering (S1E10 orders before S1E2)
+    video.episodes.sort((a, b) => int.parse(a.episodeID.split("E")[1]).compareTo(int.parse(b.episodeID.split("E")[1])));
     for (int i = 0; i < video.episodes.length; i++) {
       if (int.parse(video.episodes[i].episodeID.split("S")[1].split("E")[0]) == selectedSeason) {
         bool watched = false;
@@ -98,7 +100,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
               if (value.snapshot.val()["watched"] != null) watched = value.snapshot.val()["watched"];
               if (value.snapshot.val()["progress"] != null) progress = value.snapshot.val()["progress"];
             }
-            print(watched.toString() + "–" + progress);
+            print(watched.toString() + " – " + progress);
           });
         }
         setState(() {
@@ -107,18 +109,14 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
             child: new Card(
               elevation: 16,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  side: BorderSide(
-                      color: (episode.episodeID == video.episodes[i].episodeID)
-                          ? mainColor
-                          : Colors.transparent, width: 2)),
+                borderRadius: BorderRadius.circular(8.0),
+                side: BorderSide(color: (episode.episodeID == video.episodes[i].episodeID) ? mainColor : Colors.transparent, width: 2)
+              ),
               color: currCardColor,
               child: InkWell(
                 borderRadius: BorderRadius.circular(8.0),
                 onTap: () {
-                  router.navigateTo(context,
-                      "/shows/details?id=${video.videoID}-${video.episodes[i]
-                          .episodeID}", transition: TransitionType.fadeIn);
+                  router.navigateTo(context, "/shows/details?id=${video.videoID}-${video.episodes[i].episodeID}", transition: TransitionType.fadeIn);
                 },
                 child: new Container(
                   padding: EdgeInsets.all(8),
@@ -126,32 +124,18 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(padding: EdgeInsets.only(
-                          left: 16, top: 8, bottom: 8, right: 16),
-                          child: new Text(
-                            video.episodes[i].episodeID.split("E")[1],
-                            style: TextStyle(
-                                fontSize: 30, color: currBackgroundColor),)),
+                      Container(padding: EdgeInsets.only(left: 16, top: 8, bottom: 8, right: 16),
+                          child: new Text(video.episodes[i].episodeID.split("E")[1], style: TextStyle(fontSize: 30, color: currBackgroundColor),)),
                       Container(
                         padding: EdgeInsets.only(top: 8),
-                        width: (MediaQuery
-                            .of(context)
-                            .size
-                            .width > 1200) ? 1000 - 363 : MediaQuery
-                            .of(context)
-                            .size
-                            .width - 100 - 363,
+                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 363 : MediaQuery.of(context).size.width - 100 - 363,
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            new Text(video.episodes[i].name, style: TextStyle(
-                                fontSize: 25,
-                                fontFamily: "Sifonn",
-                                color: mainColor),),
+                            new Text(video.episodes[i].name, style: TextStyle(fontSize: 25, fontFamily: "Sifonn", color: mainColor),),
                             new Padding(padding: EdgeInsets.all(4),),
-                            new Text(video.episodes[i].desc, style: TextStyle(
-                                fontSize: 20, color: currTextColor),),
+                            new Text(video.episodes[i].desc, style: TextStyle(fontSize: 20, color: currTextColor),),
                           ],
                         ),
                       ),
@@ -206,30 +190,28 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                 child: Column(
                   children: <Widget>[
                     new Padding(padding: EdgeInsets.all(16)),
-                    new ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: new Container(
-                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                        height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 2,
-                        color: Colors.black,
-                        child: Stack(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    flex: 1,
-                                    child: EasyWebView(
-                                        src: src,
-                                        onLoaded: () {
-                                          print('$key: Loaded: $src');
-                                        },
-                                        key: key
-                                      // width: 100,
-                                      // height: 100,
-                                    )),
-                              ],
-                            ),
-                          ],
+                    new Card(
+                      elevation: 16,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: new Container(
+                          width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                          height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 16 * 9,
+                          color: Colors.black,
+                          child: Stack(
+                            children: <Widget>[
+                              EasyWebView(
+                                  src: src,
+                                  onLoaded: () {
+                                    print('$key: Loaded: $src');
+                                  },
+                                  key: key
+                                // width: 100,
+                                // height: 100,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -300,31 +282,29 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                               new Container(
                                 width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 100 - 163,
                                 height: 50,
-                                child: Expanded(
-                                  child: new ListView.builder(
-                                    itemCount: seasons.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return Container(
-                                        padding: EdgeInsets.all(4),
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                                          elevation: selectedSeason == seasons[index] ? 16 : 0,
-                                          color: selectedSeason == seasons[index] ? mainColor : currBackgroundColor,
-                                          child: new InkWell(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            onTap: () {
-                                              setState(() {
-                                                selectedSeason = seasons[index];
-                                                getEpisodes();
-                                              });
-                                            },
-                                            child: Container(padding: EdgeInsets.only(left: 12, top: 4, bottom: 4, right: 12), child: Text("Season ${seasons[index]}", style: TextStyle(fontSize: 30, color: selectedSeason == seasons[index] ? Colors.white : currDividerColor,),))
-                                          ),
+                                child: new ListView.builder(
+                                  itemCount: seasons.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Container(
+                                      padding: EdgeInsets.all(4),
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                                        elevation: selectedSeason == seasons[index] ? 16 : 0,
+                                        color: selectedSeason == seasons[index] ? mainColor : currBackgroundColor,
+                                        child: new InkWell(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                          onTap: () {
+                                            setState(() {
+                                              selectedSeason = seasons[index];
+                                              getEpisodes();
+                                            });
+                                          },
+                                          child: Container(padding: EdgeInsets.only(left: 12, top: 4, bottom: 4, right: 12), child: Text("Season ${seasons[index]}", style: TextStyle(fontSize: 30, color: selectedSeason == seasons[index] ? Colors.white : currDividerColor,),))
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 )
                               ),
                               new Container(

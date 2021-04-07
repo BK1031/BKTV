@@ -4,6 +4,7 @@ import 'package:bk1031_tv/models/user.dart';
 import 'package:bk1031_tv/models/video.dart';
 import 'package:bk1031_tv/navbars/home_footer.dart';
 import 'package:bk1031_tv/navbars/home_navbar.dart';
+import 'package:bk1031_tv/pages/admin/new_video_dialog.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,12 +12,12 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 
-class NewVideoPage extends StatefulWidget {
+class AdminPage extends StatefulWidget {
   @override
-  _NewVideoPageState createState() => _NewVideoPageState();
+  _AdminPageState createState() => _AdminPageState();
 }
 
-class _NewVideoPageState extends State<NewVideoPage> {
+class _AdminPageState extends State<AdminPage> {
 
   bool authorized;
 
@@ -43,6 +44,20 @@ class _NewVideoPageState extends State<NewVideoPage> {
     else {
       router.navigateTo(context, "/", transition: TransitionType.fadeIn, replace: true);
     }
+  }
+
+  void showNewVideoDialog() {
+    String type = "Movie";
+    showDialog(context: context, builder: (context) => AlertDialog(
+      elevation: 16,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      backgroundColor: currBackgroundColor,
+      title: new Text(
+        "New Video",
+        style: TextStyle(fontSize: 35, fontFamily: "Sifonn", color: mainColor),
+      ),
+      content: NewVideoDialog()
+    ));
   }
 
   @override
@@ -114,7 +129,7 @@ class _NewVideoPageState extends State<NewVideoPage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(8.0),
                         onTap: () {
-
+                          showNewVideoDialog();
                         },
                         child: new Container(
                           padding: EdgeInsets.all(8),

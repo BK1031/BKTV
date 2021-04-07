@@ -70,30 +70,28 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 child: Column(
                   children: <Widget>[
                     new Padding(padding: EdgeInsets.all(16)),
-                    new ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: new Container(
-                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                        height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 2,
-                        color: Colors.black,
-                        child: Stack(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    flex: 1,
-                                    child: EasyWebView(
-                                        src: src,
-                                        onLoaded: () {
-                                          print('$key: Loaded: $src');
-                                        },
-                                        key: key
-                                      // width: 100,
-                                      // height: 100,
-                                    )),
-                              ],
-                            ),
-                          ],
+                    new Card(
+                      elevation: 16,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: new Container(
+                          width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                          height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 16 * 9,
+                          color: Colors.black,
+                          child: Stack(
+                            children: <Widget>[
+                              EasyWebView(
+                                  src: src,
+                                  onLoaded: () {
+                                    print('$key: Loaded: $src');
+                                  },
+                                  key: key
+                                // width: 100,
+                                // height: 100,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

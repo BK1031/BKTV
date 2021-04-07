@@ -78,97 +78,94 @@ class _HomePageState extends State<HomePage> {
 
   void getContinue() {
     fb.database().ref("users").child(currUser.userID).child("continue").onChildAdded.listen((event) {
-      print(event.snapshot.key);
-      if (continueWidgetList.length < 7) {
-        fb.database().ref("videos").child(event.snapshot.key.contains("-") ? event.snapshot.key.split("-")[0] : event.snapshot.key).once("value").then((value) {
-          Video video = new Video.fromSnapshot(value.snapshot);
-          setState(() {
-            continueWidgetList.add(new Card(
-              elevation: 16,
-              color: currCardColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-              child: new InkWell(
-                onTap: () {
-                  if (video.type == "Movie") {
-                    router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
-                  }
-                  else if (video.type == "TV-Show") {
-                    router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
-                  }
-                },
-                borderRadius: BorderRadius.circular(8.0),
-                child: Stack(
-                  children: [
-                    new Container(
-                      height: 225,
-                      width: 155,
-                      child: new ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: new CachedNetworkImage(
-                          imageUrl: video.cover,
-                          fit: BoxFit.cover,
-                        ),
+      fb.database().ref("videos").child(event.snapshot.key.contains("-") ? event.snapshot.key.split("-")[0] : event.snapshot.key).once("value").then((value) {
+        Video video = new Video.fromSnapshot(value.snapshot);
+        setState(() {
+          continueWidgetList.add(new Card(
+            elevation: 16,
+            color: currCardColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            child: new InkWell(
+              onTap: () {
+                if (video.type == "Movie") {
+                  router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                }
+                else if (video.type == "TV-Show") {
+                  router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                }
+              },
+              borderRadius: BorderRadius.circular(8.0),
+              child: Stack(
+                children: [
+                  new Container(
+                    height: 225,
+                    width: 155,
+                    child: new ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: new CachedNetworkImage(
+                        imageUrl: video.cover,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    new Container(
-                        height: 225,
-                        width: 155,
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            new Container(
-                              height: 35,
-                            ),
-                            Stack(
+                  ),
+                  new Container(
+                      height: 225,
+                      width: 155,
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          new Container(
+                            height: 35,
+                          ),
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              new Container(color: Colors.white, height: 25, width: 25,),
+                              new IconButton(icon: Icon(Icons.play_circle_fill_rounded), color: mainColor, iconSize: 50, onPressed: () {
+                                if (video.type == "Movie") {
+                                  router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                                }
+                                else if (video.type == "TV-Show") {
+                                  router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                                }
+                              }),
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                new Container(color: Colors.white, height: 25, width: 25,),
-                                new IconButton(icon: Icon(Icons.play_circle_fill_rounded), color: mainColor, iconSize: 50, onPressed: () {
-                                  if (video.type == "Movie") {
-                                    router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
-                                  }
-                                  else if (video.type == "TV-Show") {
-                                    router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
-                                  }
-                                }),
-                              ],
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  new ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: new LinearProgressIndicator(
-                                      minHeight: 25,
-                                      backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                                      value: int.parse(event.snapshot.val()["progress"].toString().split("/")[0]) / int.parse(event.snapshot.val()["progress"].toString().split("/")[1]),
+                                new ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: new LinearProgressIndicator(
+                                    minHeight: 25,
+                                    backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                                    value: int.parse(event.snapshot.val()["progress"].toString().split("/")[0]) / int.parse(event.snapshot.val()["progress"].toString().split("/")[1]),
+                                  ),
+                                ),
+                                Container(
+                                  height: 25,
+                                  child: Center(
+                                    child: new Text(
+                                      event.snapshot.key.contains("-") ? event.snapshot.key.split("-")[1] : "",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
                                     ),
                                   ),
-                                  Container(
-                                    height: 25,
-                                    child: Center(
-                                      child: new Text(
-                                        event.snapshot.key.contains("-") ? event.snapshot.key.split("-")[1] : "",
-                                        style: TextStyle(color: Colors.white, fontSize: 20),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                    ),
-                  ],
-                ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                  ),
+                ],
               ),
-            ));
-          });
+            ),
+          ));
         });
-      }
+      });
     });
   }
 
@@ -177,6 +174,15 @@ class _HomePageState extends State<HomePage> {
     if (MediaQuery.of(context).size.width > 800) {
       return new Scaffold(
         backgroundColor: currBackgroundColor,
+        floatingActionButton: Visibility(
+          visible: currUser.email == "bharat1031@gmail.com",
+          child: FloatingActionButton(
+            child: Icon(Icons.admin_panel_settings, color: Colors.white,),
+            onPressed: () {
+              router.navigateTo(context, "/admin", transition: TransitionType.fadeIn);
+            },
+          ),
+        ),
         body: new Column(
           children: <Widget>[
             new HomeNavbar(),
@@ -205,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 new Padding(padding: EdgeInsets.all(4)),
                                 new Text(
-                                  "Open Source, No Ads, Always Free ",
+                                  "Open Source, No Ads, Always Free",
                                   style: TextStyle(fontSize: 20, color: currTextColor),
                                 ),
                                 new Padding(padding: EdgeInsets.all(8)),

@@ -24,4 +24,5 @@ ThemeData mainTheme = new ThemeData(
   accentColor: mainColor,
   primaryColor: mainColor,
   fontFamily: "DIN Condensed",
+  brightness: Brightness.dark
 );

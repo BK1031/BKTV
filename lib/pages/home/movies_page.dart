@@ -38,22 +38,25 @@ class _MoviesPageState extends State<MoviesPage> {
             color: currCardColor,
             elevation: 16,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-            child: new InkWell(
-              onTap: () {
-                if (video.type == "Movie") {
-                  router.navigateTo(context, "/movies/details?id=${video.videoID}", transition: TransitionType.fadeIn);
-                }
-                else if (video.type == "TV-Show") {
-                  router.navigateTo(context, "/shows/details?id=${video.videoID}", transition: TransitionType.fadeIn);
-                }
-              },
-              borderRadius: BorderRadius.circular(8.0),
-              child: new Container(
-                height: 225,
-                width: 155,
-                child: new CachedNetworkImage(
-                  imageUrl: video.cover,
-                  fit: BoxFit.cover,
+            child: new Container(
+              height: 225,
+              width: 155,
+              child: new InkWell(
+                onTap: () {
+                  if (video.type == "Movie") {
+                    router.navigateTo(context, "/movies/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                  }
+                  else if (video.type == "TV-Show") {
+                    router.navigateTo(context, "/shows/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                  }
+                },
+                borderRadius: BorderRadius.circular(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: new CachedNetworkImage(
+                    imageUrl: video.cover,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -75,54 +78,7 @@ class _MoviesPageState extends State<MoviesPage> {
               child: new SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    new Container(
-                      padding: EdgeInsets.all(16),
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: Center(
-                        child: new Card(
-                          color: currCardColor,
-                          elevation: 16,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                          child: Container(
-                            width: 600,
-                            padding: EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "BKTV",
-                                  style: TextStyle(fontSize: 60, fontFamily: "Sifonn", color: mainColor),
-                                ),
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "Open Source, No Ads, Always Free ",
-                                  style: TextStyle(fontSize: 20, color: currTextColor),
-                                ),
-                                new Padding(padding: EdgeInsets.all(8)),
-                                new Theme(
-                                  data: new ThemeData(
-                                    fontFamily: "DIN Condensed",
-                                    primaryColor: mainColor,
-                                    hintColor: currDividerColor,
-                                  ),
-                                  child: new TextField(
-                                    decoration: InputDecoration(
-                                        labelText: "Search",
-                                        hintText: "Search for a movie or show",
-                                        border: OutlineInputBorder()
-                                    ),
-                                    style: TextStyle(color: currTextColor, fontSize: 20),
-                                    autocorrect: false,
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    new Padding(padding: EdgeInsets.all(16),),
                     new Container(
                       padding: EdgeInsets.all(16),
                       width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,

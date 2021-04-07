@@ -1,3 +1,4 @@
+import 'package:bk1031_tv/pages/admin/admin_page.dart';
 import 'package:bk1031_tv/pages/auth/login_page.dart';
 import 'package:bk1031_tv/pages/auth/register_page.dart';
 import 'package:bk1031_tv/pages/home/home_page.dart';
@@ -54,6 +55,11 @@ void main() {
   // PLAYER ROUTES
   router.define('/watch', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new PlayerPage();
+  }));
+
+  // ADMIN ROUTES
+  router.define('/admin', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new AdminPage();
   }));
 
   runApp(new MaterialApp(

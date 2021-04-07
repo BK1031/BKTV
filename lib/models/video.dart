@@ -35,7 +35,6 @@ class Video {
         // Episodes exit, add em idiot
         Map<dynamic,dynamic> map = snapshot.val()["episodes"];
         for (var key in map.keys) {
-          print(snapshot.val()["episodes"][key]);
           episodes.add(new Episode.fromMap(key, snapshot.val()["episodes"][key]));
         }
       }
