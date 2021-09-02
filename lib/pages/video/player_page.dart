@@ -4,29 +4,30 @@ import 'package:bk1031_tv/models/user.dart';
 import 'package:bk1031_tv/models/video.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
-import 'package:easy_web_view/easy_web_view.dart';
+import 'package:easy_web_view2/easy_web_view2.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 
 class PlayerPage extends StatefulWidget {
+  String id;
+  PlayerPage(this.id);
   @override
-  _PlayerPageState createState() => _PlayerPageState();
+  _PlayerPageState createState() => _PlayerPageState(this.id);
 }
 
 class _PlayerPageState extends State<PlayerPage> {
   final Storage _localStorage = html.window.localStorage;
 
-  Video video = new Video.plain();
-  User currUser = User.plain();
+  String id;
+  Video video = new Video();
+  User currUser = User();
 
   String src = 'https://tv.bk1031.dev';
-  String src2 = 'https://flutter.dev';
-  String src3 = 'http://www.youtube.com/embed/IyFZznAk69U';
   static ValueKey key = ValueKey('key_0');
-  static ValueKey key2 = ValueKey('key_1');
-  static ValueKey key3 = ValueKey('key_2');
   bool open = false;
+
+  _PlayerPageState(this.id);
 
   @override
   void initState() {

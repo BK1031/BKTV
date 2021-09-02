@@ -18,7 +18,7 @@ class TrendingPage extends StatefulWidget {
 
 class _TrendingPageState extends State<TrendingPage> {
   final Storage _localStorage = html.window.localStorage;
-  User currUser = User.plain();
+  User currUser = User();
 
   List<Widget> widgetList = new List();
 

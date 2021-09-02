@@ -22,7 +22,7 @@ class _AdminPageState extends State<AdminPage> {
   bool authorized;
 
   final Storage _localStorage = html.window.localStorage;
-  User currUser = User.plain();
+  User currUser = User();
 
   List<Widget> newWidgetList = [];
   List<Widget> continueWidgetList = [];

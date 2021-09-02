@@ -42,19 +42,19 @@ void main() {
   router.define('/movies', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new MoviesPage();
   }));
-  router.define('/movies/details', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new MovieDetailsPage();
+  router.define('/movies/:id', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new MovieDetailsPage(params["id"][0]);
   }));
   router.define('/shows', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new ShowsPage();
   }));
-  router.define('/shows/details', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new ShowDetailsPage();
+  router.define('/shows/:id', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ShowDetailsPage(params["id"][0]);
   }));
 
   // PLAYER ROUTES
-  router.define('/watch', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new PlayerPage();
+  router.define('/watch/:id', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new PlayerPage(params["id"][0]);
   }));
 
   // ADMIN ROUTES

@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final Storage _localStorage = html.window.localStorage;
-  User currUser = User.plain();
+  User currUser = User();
 
   List<Widget> newWidgetList = [];
   List<Widget> continueWidgetList = [];
@@ -54,10 +54,10 @@ class _HomePageState extends State<HomePage> {
               child: new InkWell(
                 onTap: () {
                   if (video.type == "Movie") {
-                    router.navigateTo(context, "/movies/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                    router.navigateTo(context, "/movies/${video.videoID}", transition: TransitionType.fadeIn);
                   }
                   else if (video.type == "TV-Show") {
-                    router.navigateTo(context, "/shows/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                    router.navigateTo(context, "/shows/${video.videoID}", transition: TransitionType.fadeIn);
                   }
                 },
                 borderRadius: BorderRadius.circular(8.0),
@@ -88,10 +88,10 @@ class _HomePageState extends State<HomePage> {
             child: new InkWell(
               onTap: () {
                 if (video.type == "Movie") {
-                  router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                  router.navigateTo(context, "/movies/${event.snapshot.key}", transition: TransitionType.fadeIn);
                 }
                 else if (video.type == "TV-Show") {
-                  router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                  router.navigateTo(context, "/shows/${event.snapshot.key}", transition: TransitionType.fadeIn);
                 }
               },
               borderRadius: BorderRadius.circular(8.0),
@@ -124,10 +124,10 @@ class _HomePageState extends State<HomePage> {
                               new Container(color: Colors.white, height: 25, width: 25,),
                               new IconButton(icon: Icon(Icons.play_circle_fill_rounded), color: mainColor, iconSize: 50, onPressed: () {
                                 if (video.type == "Movie") {
-                                  router.navigateTo(context, "/movies/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                                  router.navigateTo(context, "/movies/${event.snapshot.key}", transition: TransitionType.fadeIn);
                                 }
                                 else if (video.type == "TV-Show") {
-                                  router.navigateTo(context, "/shows/details?id=${event.snapshot.key}", transition: TransitionType.fadeIn);
+                                  router.navigateTo(context, "/shows/${event.snapshot.key}", transition: TransitionType.fadeIn);
                                 }
                               }),
                             ],

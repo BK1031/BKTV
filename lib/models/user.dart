@@ -6,7 +6,7 @@ class User {
   String email = "";
   String profileUrl = "";
 
-  User.plain();
+  User();
 
   User.fromSnapshot(DataSnapshot snapshot) {
     userID = snapshot.key;

@@ -22,8 +22,8 @@ class _NewVideoDialogState extends State<NewVideoDialog> {
 
   String type = "Movie";
 
-  Video video = Video.plain();
-  Episode episode = Episode.plain();
+  Video video = Video();
+  Episode episode = Episode();
   String seasonNum = "";
   String episodeNum = "";
 
@@ -32,7 +32,7 @@ class _NewVideoDialogState extends State<NewVideoDialog> {
   bool showSelection = false;
 
   final Storage _localStorage = html.window.localStorage;
-  User currUser = User.plain();
+  User currUser = User();
 
   @override
   void initState() {
@@ -347,8 +347,8 @@ class _NewVideoDialogState extends State<NewVideoDialog> {
                                     child: new Text("ADD EPISODE", style: TextStyle(color: mainColor)),
                                     onPressed: () {
                                       setState(() {
-                                        video = Video.plain();
-                                        episode = Episode.plain();
+                                        video = Video();
+                                        episode = Episode();
                                         newShow = false;
                                       });
                                     },
@@ -496,9 +496,9 @@ class _NewVideoDialogState extends State<NewVideoDialog> {
                                     child: new Text("ADD SHOW", style: TextStyle(color: mainColor)),
                                     onPressed: () {
                                       setState(() {
-                                        video = Video.plain();
+                                        video = Video();
                                         video.videoID = fb.database().ref("videos").push().key.toString().replaceAll("-", "").replaceAll("_", "");
-                                        episode = Episode.plain();
+                                        episode = Episode();
                                         newShow = true;
                                       });
                                     },

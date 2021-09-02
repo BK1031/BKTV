@@ -19,7 +19,7 @@ class MoviesPage extends StatefulWidget {
 class _MoviesPageState extends State<MoviesPage> {
 
   final Storage _localStorage = html.window.localStorage;
-  User currUser = User.plain();
+  User currUser = User();
 
   List<Widget> widgetList = new List();
 
@@ -44,10 +44,10 @@ class _MoviesPageState extends State<MoviesPage> {
               child: new InkWell(
                 onTap: () {
                   if (video.type == "Movie") {
-                    router.navigateTo(context, "/movies/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                    router.navigateTo(context, "/movies/${video.videoID}", transition: TransitionType.fadeIn);
                   }
                   else if (video.type == "TV-Show") {
-                    router.navigateTo(context, "/shows/details?id=${video.videoID}", transition: TransitionType.fadeIn);
+                    router.navigateTo(context, "/shows/${video.videoID}", transition: TransitionType.fadeIn);
                   }
                 },
                 borderRadius: BorderRadius.circular(8.0),

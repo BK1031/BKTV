@@ -8,7 +8,7 @@ class Episode {
   String year = "";
   List<Comment> comments = new List();
 
-  Episode.plain();
+  Episode();
 
   Episode.fromSnapshot(DataSnapshot snapshot) {
     episodeID = snapshot.key;

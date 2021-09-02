@@ -1,5 +1,6 @@
 import 'package:bk1031_tv/models/episode.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_web_view2/easy_web_view2.dart';
 import 'package:flutter/material.dart';
 import 'dart:html';
 import 'dart:html' as html;
@@ -9,23 +10,25 @@ import 'package:bk1031_tv/navbars/home_footer.dart';
 import 'package:bk1031_tv/navbars/home_navbar.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
-import 'package:easy_web_view/easy_web_view.dart';
 import 'package:fluro/fluro.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:flutter/rendering.dart';
 
 class ShowDetailsPage extends StatefulWidget {
+  String id;
+  ShowDetailsPage(this.id);
   @override
-  _ShowDetailsPageState createState() => _ShowDetailsPageState();
+  _ShowDetailsPageState createState() => _ShowDetailsPageState(this.id);
 }
 
 class _ShowDetailsPageState extends State<ShowDetailsPage> {
   final Storage _localStorage = html.window.localStorage;
 
-  Video video = new Video.plain();
-  User currUser = User.plain();
+  String id;
+  Video video = new Video();
+  User currUser = User();
 
-  Episode episode = new Episode.plain();
+  Episode episode = new Episode();
 
   String src = 'https://tv.bk1031.dev';
   static ValueKey key = ValueKey('key_0');
@@ -34,6 +37,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
   List<int> seasons = [];
   int selectedSeason = 1;
   List<Widget> episodeWidgetList = [];
+
+  _ShowDetailsPageState(this.id);
 
   @override
   void initState() {
@@ -46,29 +51,24 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
         });
       });
     }
-    if (html.window.location.toString().contains("?id=")) {
-      fb.database().ref("videos").child(html.window.location.toString().split("?id=")[1].contains("-") ? html.window.location.toString().split("?id=")[1].split("-")[0] : html.window.location.toString().split("?id=")[1]).once("value").then((value) {
-        if (value.snapshot != null) {
+    fb.database().ref("videos").child(id.contains("-") ? id.split("-")[0] : id.split("?id=")[1]).once("value").then((value) {
+      if (value.snapshot != null) {
+        setState(() {
+          video = new Video.fromSnapshot(value.snapshot);
+          src = "https://tv.bk1031.dev/watch?id=$id";
+        });
+        if (id.contains("-")) {
           setState(() {
-            video = new Video.fromSnapshot(value.snapshot);
-            src = "https://tv.bk1031.dev/watch?id=${html.window.location.toString().split("?id=")[1]}";
+            selectedSeason = int.parse(id.split("-")[1].split("S")[1].split("E")[0]);
+            episode = video.episodes[video.episodes.indexWhere((element) => element.episodeID == id.split("-")[1])];
           });
-          if (html.window.location.toString().split("?id=")[1].contains("-")) {
-            setState(() {
-              selectedSeason = int.parse(html.window.location.toString().split("?id=")[1].split("-")[1].split("S")[1].split("E")[0]);
-              episode = video.episodes[video.episodes.indexWhere((element) => element.episodeID == html.window.location.toString().split("?id=")[1].split("-")[1])];
-            });
-          }
-          getSeasons();
         }
-        else {
-          router.navigateTo(context, "/shows", transition: TransitionType.fadeIn);
-        }
-      });
-    }
-    else {
-      router.navigateTo(context, "/shows", transition: TransitionType.fadeIn);
-    }
+        getSeasons();
+      }
+      else {
+        router.navigateTo(context, "/shows", transition: TransitionType.fadeIn);
+      }
+    });
   }
 
   Future<void> getSeasons() async {
@@ -116,7 +116,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(8.0),
                 onTap: () {
-                  router.navigateTo(context, "/shows/details?id=${video.videoID}-${video.episodes[i].episodeID}", transition: TransitionType.fadeIn);
+                  router.navigateTo(context, "/shows/${video.videoID}-${video.episodes[i].episodeID}", transition: TransitionType.fadeIn);
                 },
                 child: new Container(
                   padding: EdgeInsets.all(8),
@@ -265,7 +265,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                       elevation: 0,
                                       child: new Container(
                                         padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
-                                        child: new Text(html.window.location.toString().split("?id=")[1].contains("-") ? episode.episodeID : video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
+                                        child: new Text(id.contains("-") ? episode.episodeID : video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
                                       ),
                                     ),
                                   ],

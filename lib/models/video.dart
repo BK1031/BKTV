@@ -12,7 +12,7 @@ class Video {
   List<Comment> comments = new List();
   List<Episode> episodes = new List();
 
-  Video.plain();
+  Video();
 
   Video.fromSnapshot(DataSnapshot snapshot) {
     videoID = snapshot.key;

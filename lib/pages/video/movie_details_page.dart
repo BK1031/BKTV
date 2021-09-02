@@ -7,46 +7,46 @@ import 'package:bk1031_tv/navbars/home_navbar.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_web_view/easy_web_view.dart';
+import 'package:easy_web_view2/easy_web_view2.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 
 class MovieDetailsPage extends StatefulWidget {
+  String id;
+  MovieDetailsPage(this.id);
   @override
-  _MovieDetailsPageState createState() => _MovieDetailsPageState();
+  _MovieDetailsPageState createState() => _MovieDetailsPageState(this.id);
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   final Storage _localStorage = html.window.localStorage;
 
-  Video video = new Video.plain();
-  User currUser = User.plain();
+  String id;
+  Video video = new Video();
+  User currUser = User();
 
   String src = 'https://tv.bk1031.dev';
   static ValueKey key = ValueKey('key_0');
   bool open = false;
 
+  _MovieDetailsPageState(this.id);
+
 @override
   void initState() {
     super.initState();
-    if (html.window.location.toString().contains("?id=")) {
-      fb.database().ref("videos").child(html.window.location.toString().split("?id=")[1]).once("value").then((value) {
-        if (value.snapshot != null) {
-          setState(() {
-            video = new Video.fromSnapshot(value.snapshot);
-            src = "https://tv.bk1031.dev/watch?id=${video.videoID}";
-          });
-        }
-        else {
-          router.navigateTo(context, "/movies", transition: TransitionType.fadeIn);
-        }
-      });
-    }
-    else {
-      router.navigateTo(context, "/movies", transition: TransitionType.fadeIn);
-    }
+    fb.database().ref("videos").child(id).once("value").then((value) {
+      if (value.snapshot != null) {
+        setState(() {
+          video = new Video.fromSnapshot(value.snapshot);
+          src = "https://tv.bk1031.dev/watch?id=${video.videoID}";
+        });
+      }
+      else {
+        router.navigateTo(context, "/movies", transition: TransitionType.fadeIn);
+      }
+    });
     if (_localStorage.containsKey("userID")) {
       fb.database().ref("users").child(_localStorage["userID"]).once("value").then((value) {
         setState(() {
@@ -59,7 +59,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 800) {
+    if (MediaQuery.of(context).size.width > 500) {
       return new Scaffold(
         backgroundColor: currBackgroundColor,
         body: new Column(
@@ -83,6 +83,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             children: <Widget>[
                               EasyWebView(
                                   src: src,
+                                  webAllowFullScreen: true,
                                   onLoaded: () {
                                     print('$key: Loaded: $src');
                                   },

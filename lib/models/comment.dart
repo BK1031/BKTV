@@ -3,7 +3,7 @@ import 'package:firebase/firebase.dart' as fb;
 
 class Comment {
   String commentID = "";
-  User user = User.plain();
+  User user = User();
   String body = "";
   String date = "";
   String timestamp = "";
