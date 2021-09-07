@@ -20,7 +20,7 @@ class _ShowsPageState extends State<ShowsPage> {
   final Storage _localStorage = html.window.localStorage;
   User currUser = User();
 
-  List<Widget> widgetList = new List();
+  List<Widget> widgetList = [];
 
   @override
   void initState() {
@@ -67,60 +67,42 @@ class _ShowsPageState extends State<ShowsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 800) {
-      return new Scaffold(
-        backgroundColor: currBackgroundColor,
-        body: new Column(
-          children: <Widget>[
-            new HomeNavbar(),
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    new Padding(padding: EdgeInsets.all(16),),
-                    new Container(
+    return new Scaffold(
+      backgroundColor: currBackgroundColor,
+      body: new Column(
+        children: <Widget>[
+          new HomeNavbar(),
+          new Expanded(
+            child: new SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.all(16),),
+                  new Container(
+                    padding: EdgeInsets.all(16),
+                    width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                    child: new Text(
+                      "TV-Shows",
+                      style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
+                    ),
+                  ),
+                  new Container(
                       padding: EdgeInsets.all(16),
                       width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: new Text(
-                        "TV-Shows",
-                        style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
-                      ),
-                    ),
-                    new Container(
-                        padding: EdgeInsets.all(16),
-                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                        child: new Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          direction: Axis.horizontal,
-                          children: widgetList,
-                        )
-                    ),
-                    new Container(height: 200,),
-                    new HomeFooter()
-                  ],
-                ),
+                      child: new Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        direction: Axis.horizontal,
+                        children: widgetList,
+                      )
+                  ),
+                  new Container(height: 200,),
+                  new HomeFooter()
+                ],
               ),
             ),
-          ],
-        ),
-      );
-    }
-    else {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-          elevation: 0.0,
-          backgroundColor: mainColor,
-        ),
-        backgroundColor: currBackgroundColor,
-        body: new SingleChildScrollView(
-          child: new Column(
-            children: <Widget>[
-            ],
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
 }

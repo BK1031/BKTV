@@ -30,7 +30,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
 
   Episode episode = new Episode();
 
-  String src = 'https://tv.bk1031.dev';
+  String src = 'https://i.gifer.com/90OK.gif';
   static ValueKey key = ValueKey('key_0');
   bool open = false;
 
@@ -51,7 +51,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
         });
       });
     }
-    fb.database().ref("videos").child(id.contains("-") ? id.split("-")[0] : id.split("?id=")[1]).once("value").then((value) {
+    fb.database().ref("videos").child(id.contains("-") ? id.split("-")[0] : id).once("value").then((value) {
       if (value.snapshot != null) {
         setState(() {
           video = new Video.fromSnapshot(value.snapshot);
@@ -126,43 +126,47 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                     children: [
                       Container(padding: EdgeInsets.only(left: 16, top: 8, bottom: 8, right: 16),
                           child: new Text(video.episodes[i].episodeID.split("E")[1], style: TextStyle(fontSize: 30, color: currBackgroundColor),)),
-                      Container(
-                        padding: EdgeInsets.only(top: 8),
-                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 363 : MediaQuery.of(context).size.width - 100 - 363,
-                        child: new Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            new Text(video.episodes[i].name, style: TextStyle(fontSize: 25, fontFamily: "Sifonn", color: mainColor),),
-                            new Padding(padding: EdgeInsets.all(4),),
-                            new Text(video.episodes[i].desc, style: TextStyle(fontSize: 20, color: currTextColor),),
-                          ],
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(top: 8),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              new Text(video.episodes[i].name, style: TextStyle(fontSize: 25, fontFamily: "Sifonn", color: mainColor),),
+                              new Padding(padding: EdgeInsets.all(4),),
+                              new Text(video.episodes[i].desc, style: TextStyle(fontSize: 20, color: currTextColor),),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 100,
-                        padding: EdgeInsets.all(16),
-                        child: watched != true ? progress != "" ? new ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: new LinearProgressIndicator(
-                            minHeight: 25,
-                            backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                            value: int.parse(progress.split("/")[0]) /
-                                int.parse(progress.split("/")[1]),
-                          ),
-                        ) : new ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: new LinearProgressIndicator(
-                            minHeight: 25,
-                            backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                            value: 0,
-                          ),
-                        ) : new ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: new LinearProgressIndicator(
-                            minHeight: 25,
-                            backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                            value: 1,
+                      Visibility(
+                        visible: _localStorage.containsKey("userID"),
+                        child: Container(
+                          width: 100,
+                          padding: EdgeInsets.all(16),
+                          child: watched != true ? progress != "" ? new ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: new LinearProgressIndicator(
+                              minHeight: 25,
+                              backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                              value: int.parse(progress.split("/")[0]) /
+                                  int.parse(progress.split("/")[1]),
+                            ),
+                          ) : new ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: new LinearProgressIndicator(
+                              minHeight: 25,
+                              backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                              value: 0,
+                            ),
+                          ) : new ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: new LinearProgressIndicator(
+                              minHeight: 25,
+                              backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                              value: 1,
+                            ),
                           ),
                         ),
                       )
@@ -179,171 +183,158 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 800) {
-      return new Scaffold(
-        backgroundColor: currBackgroundColor,
-        body: new Column(
-          children: <Widget>[
-            new HomeNavbar(),
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    new Padding(padding: EdgeInsets.all(16)),
-                    new Card(
-                      elevation: 16,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: new Container(
-                          width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                          height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 16 * 9,
-                          color: Colors.black,
-                          child: Stack(
-                            children: <Widget>[
-                              EasyWebView(
-                                  src: src,
-                                  onLoaded: () {
-                                    print('$key: Loaded: $src');
-                                  },
-                                  key: key
-                                // width: 100,
-                                // height: 100,
-                              ),
-                            ],
+    return new Scaffold(
+      backgroundColor: currBackgroundColor,
+      body: new Column(
+        children: <Widget>[
+          new HomeNavbar(),
+          new Expanded(
+            child: new SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.all(16)),
+                  new Card(
+                    elevation: 16,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: new Container(
+                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32,
+                        height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32) / 16 * 9,
+                        color: Colors.black,
+                        child: id.contains("-S") ? Stack(
+                          children: <Widget>[
+                            EasyWebView(
+                                src: src,
+                                webAllowFullScreen: true,
+                                onLoaded: () {
+                                  print('$key: Loaded: $src');
+                                },
+                                key: key
+                              // width: 100,
+                              // height: 100,
+                            ),
+                          ],
+                        ) : Center(
+                          child: Container(
+                            child: Text("Please select an episode to watch below.", style: TextStyle(fontSize: 25, color: mainColor),),
                           ),
                         ),
                       ),
                     ),
-                    new Padding(padding: EdgeInsets.all(8)),
-                    Container(
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 16),
-                            child: new Container(
-                              height: 225,
-                              width: 155,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: new CachedNetworkImage(
-                                  imageUrl: video.cover,
-                                  fit: BoxFit.cover,
-                                ),
+                  ),
+                  new Padding(padding: EdgeInsets.all(8)),
+                  Container(
+                    width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 16),
+                          child: new Container(
+                            height: 225,
+                            width: 155,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: new CachedNetworkImage(
+                                imageUrl: video.cover,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              new Container(
-                                padding: EdgeInsets.all(16),
-                                child: new Text(
-                                  video.name,
-                                  style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
-                                ),
+                        ),
+                        Padding(padding: EdgeInsets.all(4)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            new Container(
+                              padding: EdgeInsets.all(16),
+                              child: new Text(
+                                video.name,
+                                style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                               ),
-                              new Container(
-                                padding: EdgeInsets.only(left: 12, right: 8),
-                                child: Wrap(
-                                  children: [
-                                    new Card(
-                                      color: mainColor,
-                                      elevation: 16,
+                            ),
+                            new Container(
+                              padding: EdgeInsets.only(left: 12, right: 8),
+                              child: Wrap(
+                                children: [
+                                  new Card(
+                                    color: mainColor,
+                                    elevation: 16,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                                    child: new Container(
+                                      padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
+                                      child: new Text(video.type, style: TextStyle(fontSize: 20, color: Colors.white),),
+                                    ),
+                                  ),
+                                  new Card(
+                                    color: currBackgroundColor,
+                                    elevation: 0,
+                                    child: new Container(
+                                      padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
+                                      child: new Text(id.contains("-") ? episode.episodeID : video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            new Container(
+                              width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 32 - 163,
+                              padding: EdgeInsets.all(16),
+                              child: new Text(
+                                video.desc,
+                                style: TextStyle(fontSize: 20, color: currTextColor),
+                              ),
+                            ),
+                            new Container(
+                              width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 32 - 163,
+                              height: 50,
+                              child: new ListView.builder(
+                                itemCount: seasons.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    padding: EdgeInsets.all(4),
+                                    child: Card(
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                                      child: new Container(
-                                        padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
-                                        child: new Text(video.type, style: TextStyle(fontSize: 20, color: Colors.white),),
+                                      elevation: selectedSeason == seasons[index] ? 16 : 0,
+                                      color: selectedSeason == seasons[index] ? mainColor : currBackgroundColor,
+                                      child: new InkWell(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        onTap: () {
+                                          setState(() {
+                                            selectedSeason = seasons[index];
+                                            getEpisodes();
+                                          });
+                                        },
+                                        child: Container(padding: EdgeInsets.only(left: 12, top: 4, bottom: 4, right: 12), child: Text("Season ${seasons[index]}", style: TextStyle(fontSize: 30, color: selectedSeason == seasons[index] ? Colors.white : currDividerColor,),))
                                       ),
                                     ),
-                                    new Card(
-                                      color: currBackgroundColor,
-                                      elevation: 0,
-                                      child: new Container(
-                                        padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
-                                        child: new Text(id.contains("-") ? episode.episodeID : video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              new Container(
-                                width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 100 - 163,
-                                padding: EdgeInsets.all(16),
-                                child: new Text(
-                                  video.desc,
-                                  style: TextStyle(fontSize: 20, color: currTextColor),
-                                ),
-                              ),
-                              new Container(
-                                width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 100 - 163,
-                                height: 50,
-                                child: new ListView.builder(
-                                  itemCount: seasons.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return Container(
-                                      padding: EdgeInsets.all(4),
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                                        elevation: selectedSeason == seasons[index] ? 16 : 0,
-                                        color: selectedSeason == seasons[index] ? mainColor : currBackgroundColor,
-                                        child: new InkWell(
-                                          borderRadius: BorderRadius.circular(8.0),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedSeason = seasons[index];
-                                              getEpisodes();
-                                            });
-                                          },
-                                          child: Container(padding: EdgeInsets.only(left: 12, top: 4, bottom: 4, right: 12), child: Text("Season ${seasons[index]}", style: TextStyle(fontSize: 30, color: selectedSeason == seasons[index] ? Colors.white : currDividerColor,),))
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                )
-                              ),
-                              new Container(
-                                width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 100 - 163,
-                                padding: EdgeInsets.only(top: 8),
-                                child: new Column(
-                                  children: episodeWidgetList,
-                                )
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  );
+                                },
+                              )
+                            ),
+                            new Container(
+                              width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 32 - 163,
+                              padding: EdgeInsets.only(top: 8),
+                              child: new Column(
+                                children: episodeWidgetList,
+                              )
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    new Container(height: 200,),
-                    new HomeFooter()
-                  ],
-                ),
+                  ),
+                  new Container(height: 200,),
+                  new HomeFooter()
+                ],
               ),
             ),
-          ],
-        ),
-      );
-    }
-    else {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-          elevation: 0.0,
-          backgroundColor: mainColor,
-        ),
-        backgroundColor: currBackgroundColor,
-        body: new SingleChildScrollView(
-          child: new Column(
-            children: <Widget>[
-            ],
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
 }

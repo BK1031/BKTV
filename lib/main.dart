@@ -8,6 +8,7 @@ import 'package:bk1031_tv/pages/home/trending_page.dart';
 import 'package:bk1031_tv/pages/video/movie_details_page.dart';
 import 'package:bk1031_tv/pages/video/player_page.dart';
 import 'package:bk1031_tv/pages/video/show_details_page.dart';
+import 'package:bk1031_tv/pages/video/video_test_page.dart';
 import 'package:bk1031_tv/utils/config.dart';
 import 'package:bk1031_tv/utils/service_account.dart';
 import 'package:bk1031_tv/utils/theme.dart';
@@ -55,6 +56,9 @@ void main() {
   // PLAYER ROUTES
   router.define('/watch/:id', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new PlayerPage(params["id"][0]);
+  }));
+  router.define('/watch/:id/test', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new VideoTestPage();
   }));
 
   // ADMIN ROUTES

@@ -171,74 +171,73 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 800) {
-      return new Scaffold(
-        backgroundColor: currBackgroundColor,
-        floatingActionButton: Visibility(
-          visible: currUser.email == "bharat1031@gmail.com",
-          child: FloatingActionButton(
-            child: Icon(Icons.admin_panel_settings, color: Colors.white,),
-            onPressed: () {
-              router.navigateTo(context, "/admin", transition: TransitionType.fadeIn);
-            },
-          ),
+    return new Scaffold(
+      backgroundColor: currBackgroundColor,
+      floatingActionButton: Visibility(
+        visible: currUser.email == "bharat1031@gmail.com",
+        child: FloatingActionButton(
+          child: Icon(Icons.admin_panel_settings, color: Colors.white,),
+          onPressed: () {
+            router.navigateTo(context, "/admin", transition: TransitionType.fadeIn);
+          },
         ),
-        body: new Column(
-          children: <Widget>[
-            new HomeNavbar(),
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    new Container(
-                      padding: EdgeInsets.all(16),
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: Center(
-                        child: new Card(
-                          color: currCardColor,
-                          elevation: 16,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                          child: Container(
-                            width: 600,
-                            padding: EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "BKTV",
-                                  style: TextStyle(fontSize: 60, fontFamily: "Sifonn", color: mainColor),
+      ),
+      body: new Column(
+        children: <Widget>[
+          new HomeNavbar(),
+          new Expanded(
+            child: new SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  new Container(
+                    padding: EdgeInsets.all(16),
+                    width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                    child: Center(
+                      child: new Card(
+                        color: currCardColor,
+                        elevation: 16,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                        child: Container(
+                          width: 600,
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              new Padding(padding: EdgeInsets.all(4)),
+                              new Text(
+                                "BKTV",
+                                style: TextStyle(fontSize: 60, fontFamily: "Sifonn", color: mainColor),
+                              ),
+                              new Padding(padding: EdgeInsets.all(4)),
+                              new Text(
+                                "Open Source, No Ads, Always Free",
+                                style: TextStyle(fontSize: 20, color: currTextColor),
+                              ),
+                              new Padding(padding: EdgeInsets.all(8)),
+                              new Theme(
+                                data: new ThemeData(
+                                  fontFamily: "DIN Condensed",
+                                  primaryColor: mainColor,
+                                  hintColor: currDividerColor,
                                 ),
-                                new Padding(padding: EdgeInsets.all(4)),
-                                new Text(
-                                  "Open Source, No Ads, Always Free",
-                                  style: TextStyle(fontSize: 20, color: currTextColor),
-                                ),
-                                new Padding(padding: EdgeInsets.all(8)),
-                                new Theme(
-                                  data: new ThemeData(
-                                    fontFamily: "DIN Condensed",
-                                    primaryColor: mainColor,
-                                    hintColor: currDividerColor,
-                                  ),
-                                  child: new TextField(
-                                    decoration: InputDecoration(
+                                child: new TextField(
+                                  decoration: InputDecoration(
                                       labelText: "Search",
                                       hintText: "Search for a movie or show",
                                       border: OutlineInputBorder()
-                                    ),
-                                    style: TextStyle(color: currTextColor, fontSize: 20),
-                                    autocorrect: false,
-                                    onChanged: (value) {},
                                   ),
+                                  style: TextStyle(color: currTextColor, fontSize: 20),
+                                  autocorrect: false,
+                                  onChanged: (value) {},
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                    new Visibility(
+                  ),
+                  new Visibility(
                       visible: _localStorage.containsKey("userID"),
                       child: new Container(
                         padding: EdgeInsets.all(16),
@@ -248,29 +247,29 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                         ),
                       )
+                  ),
+                  new Visibility(
+                    visible: _localStorage.containsKey("userID"),
+                    child: new Container(
+                        padding: EdgeInsets.all(16),
+                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                        child: new Wrap(
+                          spacing: 16,
+                          runSpacing: 16,
+                          direction: Axis.horizontal,
+                          children: continueWidgetList,
+                        )
                     ),
-                    new Visibility(
-                      visible: _localStorage.containsKey("userID"),
-                      child: new Container(
-                          padding: EdgeInsets.all(16),
-                          width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                          child: new Wrap(
-                            spacing: 16,
-                            runSpacing: 16,
-                            direction: Axis.horizontal,
-                            children: continueWidgetList,
-                          )
-                      ),
+                  ),
+                  new Container(
+                    padding: EdgeInsets.all(16),
+                    width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
+                    child: new Text(
+                      "Recently Added",
+                      style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                     ),
-                    new Container(
-                      padding: EdgeInsets.all(16),
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: new Text(
-                        "Recently Added",
-                        style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
-                      ),
-                    ),
-                    new Container(
+                  ),
+                  new Container(
                       padding: EdgeInsets.all(16),
                       width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
                       child: new Wrap(
@@ -279,32 +278,15 @@ class _HomePageState extends State<HomePage> {
                         direction: Axis.horizontal,
                         children: newWidgetList,
                       )
-                    ),
-                    new Container(height: 200,),
-                    new HomeFooter()
-                  ],
-                ),
+                  ),
+                  new Container(height: 200,),
+                  new HomeFooter()
+                ],
               ),
             ),
-          ],
-        ),
-      );
-    }
-    else {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-          elevation: 0.0,
-          backgroundColor: mainColor,
-        ),
-        backgroundColor: currBackgroundColor,
-        body: new SingleChildScrollView(
-          child: new Column(
-            children: <Widget>[
-            ],
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
 }

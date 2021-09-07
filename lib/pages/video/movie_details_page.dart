@@ -27,7 +27,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   Video video = new Video();
   User currUser = User();
 
-  String src = 'https://tv.bk1031.dev';
+  String src = 'https://i.gifer.com/90OK.gif';
   static ValueKey key = ValueKey('key_0');
   bool open = false;
 
@@ -59,137 +59,119 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 500) {
-      return new Scaffold(
-        backgroundColor: currBackgroundColor,
-        body: new Column(
-          children: <Widget>[
-            new HomeNavbar(),
-            new Expanded(
-              child: new SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    new Padding(padding: EdgeInsets.all(16)),
-                    new Card(
-                      elevation: 16,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: new Container(
-                          width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                          height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100) / 16 * 9,
-                          color: Colors.black,
-                          child: Stack(
-                            children: <Widget>[
-                              EasyWebView(
-                                  src: src,
-                                  webAllowFullScreen: true,
-                                  onLoaded: () {
-                                    print('$key: Loaded: $src');
-                                  },
-                                  key: key
-                                // width: 100,
-                                // height: 100,
-                              ),
-                            ],
-                          ),
+    return new Scaffold(
+      backgroundColor: currBackgroundColor,
+      body: new Column(
+        children: <Widget>[
+          new HomeNavbar(),
+          new Expanded(
+            child: new SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.all(16)),
+                  new Card(
+                    elevation: 16,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: new Container(
+                        width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32,
+                        height: ((MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32) / 16 * 9,
+                        color: Colors.black,
+                        child: Stack(
+                          children: <Widget>[
+                            EasyWebView(
+                                src: src,
+                                webAllowFullScreen: true,
+                                onLoaded: () {
+                                  print('$key: Loaded: $src');
+                                },
+                                key: key
+                              // width: 100,
+                              // height: 100,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    new Padding(padding: EdgeInsets.all(8)),
-                    Container(
-                      width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 100,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 16),
-                            child: new Container(
-                              height: 225,
-                              width: 155,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: new CachedNetworkImage(
-                                  imageUrl: video.cover,
-                                  fit: BoxFit.cover,
-                                ),
+                  ),
+                  new Padding(padding: EdgeInsets.all(8)),
+                  Container(
+                    width: (MediaQuery.of(context).size.width > 1200) ? 1000 : MediaQuery.of(context).size.width - 32,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 16),
+                          child: new Container(
+                            height: 225,
+                            width: 155,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: new CachedNetworkImage(
+                                imageUrl: video.cover,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              new Container(
-                                padding: EdgeInsets.all(16),
-                                child: new Text(
-                                  video.name,
-                                  style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
-                                ),
+                        ),
+                        Padding(padding: EdgeInsets.all(4)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            new Container(
+                              padding: EdgeInsets.all(16),
+                              child: new Text(
+                                video.name,
+                                style: TextStyle(fontFamily: "Sifonn", fontSize: 35, color: mainColor),
                               ),
-                              new Container(
-                                padding: EdgeInsets.only(left: 12, right: 8),
-                                child: Wrap(
-                                  children: [
-                                    new Card(
-                                      color: mainColor,
-                                      elevation: 16,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                                      child: new Container(
-                                        padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
-                                        child: new Text(video.type, style: TextStyle(fontSize: 20, color: Colors.white),),
-                                      ),
+                            ),
+                            new Container(
+                              padding: EdgeInsets.only(left: 12, right: 8),
+                              child: Wrap(
+                                children: [
+                                  new Card(
+                                    color: mainColor,
+                                    elevation: 16,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                                    child: new Container(
+                                      padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
+                                      child: new Text(video.type, style: TextStyle(fontSize: 20, color: Colors.white),),
                                     ),
-                                    new Card(
-                                      color: currBackgroundColor,
-                                      elevation: 0,
-                                      child: new Container(
-                                        padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
-                                        child: new Text(video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
-                                      ),
+                                  ),
+                                  new Card(
+                                    color: currBackgroundColor,
+                                    elevation: 0,
+                                    child: new Container(
+                                      padding: EdgeInsets.only(left: 8, top: 4, bottom: 2, right: 8),
+                                      child: new Text(video.year, style: TextStyle(fontSize: 25, color: currDividerColor),),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              new Container(
-                                width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 100 - 163,
-                                padding: EdgeInsets.all(16),
-                                child: new Text(
-                                  video.desc,
-                                  style: TextStyle(fontSize: 20, color: currTextColor),
-                                ),
+                            ),
+                            new Container(
+                              width: (MediaQuery.of(context).size.width > 1200) ? 1000 - 163 : MediaQuery.of(context).size.width - 32 - 163,
+                              padding: EdgeInsets.all(16),
+                              child: new Text(
+                                video.desc,
+                                style: TextStyle(fontSize: 20, color: currTextColor),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    new Container(height: 200,),
-                    new HomeFooter()
-                  ],
-                ),
+                  ),
+                  new Container(height: 200,),
+                  new HomeFooter()
+                ],
               ),
             ),
-          ],
-        ),
-      );
-    }
-    else {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-          elevation: 0.0,
-          backgroundColor: mainColor,
-        ),
-        backgroundColor: currBackgroundColor,
-        body: new SingleChildScrollView(
-          child: new Column(
-            children: <Widget>[
-            ],
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
 }
